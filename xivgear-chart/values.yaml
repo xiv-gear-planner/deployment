@@ -1,0 +1,89 @@
+xivgear-static:
+
+  replicaCount: 1
+
+  image:
+    repository: ghcr.io/xiv-gear-planner/xivgear-static
+    pullPolicy: IfNotPresent
+    tag: "container-build-fixes"
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      cert-manager.io/cluster-issuer: "letsencrypt-production"
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+    hosts:
+      - host: 'ok.xivgear.app'
+        paths:
+          - path: /static/(.*)
+            pathType: ImplementationSpecific
+    tls:
+      - secretName: letsencrypt-production
+        hosts:
+          - "ok.xivgear.app"
+
+  resources: {}
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+    # targetMemoryUtilizationPercentage: 80
+
+xivgear-storage-api:
+
+  replicaCount: 1
+
+  image:
+    repository: ghcr.io/xiv-gear-planner/gear-planner-server
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "master"
+
+  serviceAccount:
+    # Specifies whether a service account should be created
+    create: false
+    # Automatically mount a ServiceAccount's API credentials?
+    automount: false
+    # Annotations to add to the service account
+    annotations: {}
+    # The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname template
+    name: ""
+
+  service:
+    type: ClusterIP
+    port: 8080
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+    hosts:
+      - host: 'ok.xivgear.app'
+        paths:
+          - path: /api/(.*)
+            pathType: ImplementationSpecific
+    tls:
+      - secretName: letsencrypt-production
+        hosts:
+          - "ok.xivgear.app"
+
+  resources: {}
+
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+
