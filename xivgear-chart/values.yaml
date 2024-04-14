@@ -1,11 +1,11 @@
 xivgear-static:
 
-  replicaCount: 1
+  replicaCount: 2
 
   image:
     repository: ghcr.io/xiv-gear-planner/xivgear-static
-    pullPolicy: IfNotPresent
-    tag: "container-build-fixes"
+    pullPolicy: Always
+    tag: "prod"
 
   service:
     type: ClusterIP
@@ -17,16 +17,29 @@ xivgear-static:
     annotations:
       kubernetes.io/ingress.class: nginx
       cert-manager.io/cluster-issuer: "letsencrypt-production"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
 #      nginx.ingress.kubernetes.io/rewrite-target: /$1
     hosts:
+      - host: 'xivgear.app'
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+      - host: 'www.xivgear.app'
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
       - host: 'ok.xivgear.app'
         paths:
           - path: /
             pathType: ImplementationSpecific
-    tls:
+    tls: &tlsconfig
       - secretName: letsencrypt-production
         hosts:
+#          - "xivgear.app"
+#          - "www.xivgear.app"
           - "ok.xivgear.app"
+          - "api.xivgear.app"
+          - "share.xivgear.app"
 
   resources: {}
 
@@ -39,11 +52,11 @@ xivgear-static:
 
 xivgear-storage-api:
 
-  replicaCount: 1
+  replicaCount: 2
 
   image:
     repository: ghcr.io/xiv-gear-planner/gear-planner-server
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: "master"
 
@@ -69,15 +82,17 @@ xivgear-storage-api:
       kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
       nginx.ingress.kubernetes.io/rewrite-target: /$1
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
     hosts:
-      - host: 'ok.xivgear.app'
+      - host: 'api.xivgear.app'
         paths:
-          - path: /api/(.*)
+          - path: /(.*)
             pathType: ImplementationSpecific
-    tls:
-      - secretName: letsencrypt-production
-        hosts:
-          - "ok.xivgear.app"
+      - host: 'share.xivgear.app'
+        paths:
+          - path: /(.*)
+            pathType: ImplementationSpecific
+    tls: *tlsconfig
 
   resources: {}
 
