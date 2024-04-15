@@ -4,6 +4,10 @@ metadata:
   name: {{ include "xivgear-storage-api.fullname" . }}
   labels:
     {{- include "xivgear-storage-api.labels" . | nindent 4 }}
+  {{- with .Values.deploymentAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}

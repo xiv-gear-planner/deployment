@@ -1,5 +1,11 @@
 xivgear-static:
 
+  deploymentAnnotations: &deployAnn
+    keel.sh/policy: "force"
+    keel.sh/trigger: "poll"
+    keel.sh/pollSchedule: "@every 2m"
+
+
   replicaCount: 2
 
   image:
@@ -51,6 +57,8 @@ xivgear-static:
     # targetMemoryUtilizationPercentage: 80
 
 xivgear-storage-api:
+
+  deploymentAnnotations: *deployAnn
 
   replicaCount: 2
 

@@ -1,0 +1,9 @@
+dependencies:
+- name: xivgear-static
+  repository: file://../xivgear-static
+  version: 0.1.0
+- name: xivgear-storage-api
+  repository: file://../xivgear-storage-api
+  version: 0.1.0
+digest: sha256:859f9bc8072d6b92619e74e8a2da0e0d05e91a2bcd7d1a685799658a02b2ba1a
+generated: "2024-04-13T12:35:46.7049882-07:00"
