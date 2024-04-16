@@ -87,6 +87,7 @@ xivgear-storage-api:
       # kubernetes.io/tls-acme: "true"
       nginx.ingress.kubernetes.io/rewrite-target: /$1
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      cert-manager.io/cluster-issuer: "letsencrypt-production"
     hosts:
       - host: 'api.xivgear.app'
         paths:
