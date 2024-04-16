@@ -26,22 +26,19 @@ xivgear-static:
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
 #      nginx.ingress.kubernetes.io/rewrite-target: /$1
     hosts:
-      - host: 'xivgear.app'
+      - host: &tophost 'hbeta.xivgear.app'
         paths:
           - path: /
             pathType: ImplementationSpecific
-      - host: 'www.xivgear.app'
+      - host: &wwwhost 'www.hbeta.xivgear.app'
         paths:
           - path: /
             pathType: ImplementationSpecific
-      - host: 'ok.xivgear.app'
-        paths:
-          - path: /
-            pathType: ImplementationSpecific
-    tls:
-      - secretName: letsencrypt-production-static
+    tls: &tlsconfig
+      - secretName: letsencrypt-production
         hosts:
-          - "ok.xivgear.app"
+          - *tophost
+          - *wwwhost
 
   resources: {}
 
@@ -88,20 +85,19 @@ xivgear-storage-api:
       nginx.ingress.kubernetes.io/rewrite-target: /$1
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
     hosts:
-      - host: 'api.xivgear.app'
+      - host: &apihost 'api.hbeta.xivgear.app'
         paths:
           - path: /(.*)
             pathType: ImplementationSpecific
-      - host: 'share.xivgear.app'
+      - host: &sharehost 'share.hbeta.xivgear.app'
         paths:
           - path: /(.*)
             pathType: ImplementationSpecific
     tls:
-      - secretName: letsencrypt-production-api
+      - secretName: letsencrypt-production
         hosts:
-          - "api.xivgear.app"
-          - "share.xivgear.app"
-
+          - *apihost
+          - *sharehost
 
   resources: {}
 

@@ -5,5 +5,8 @@ dependencies:
 - name: xivgear-storage-api
   repository: file://../xivgear-storage-api
   version: 0.1.0
-digest: sha256:859f9bc8072d6b92619e74e8a2da0e0d05e91a2bcd7d1a685799658a02b2ba1a
-generated: "2024-04-13T12:35:46.7049882-07:00"
+- name: xivgear-beta
+  repository: file://../xivgear-beta
+  version: 0.1.0
+digest: sha256:66c3bf527b2dd8f6d3c83fc57d88a1d16aabd1cf42882c84ddd63812bac90f6c
+generated: "2024-04-15T17:30:34.8655298-07:00"
