@@ -4,6 +4,7 @@ xivgear-static:
     keel.sh/policy: "force"
     keel.sh/trigger: "poll"
     keel.sh/pollSchedule: "@every 2m"
+    keel.sh/match-tag: "true"
 
 
   replicaCount: 2
@@ -104,11 +105,36 @@ xivgear-storage-api:
           - "share.xivgear.app"
 
 
-  resources: {}
+xivgear-beta:
 
-  autoscaling:
-    enabled: false
-    minReplicas: 1
-    maxReplicas: 100
-    targetCPUUtilizationPercentage: 80
+  deploymentAnnotations: *deployAnn
+  image:
+    pullPolicy: Always
 
+xivgear-btest:
+
+  nameOverride: xivgear-btest
+
+  deploymentAnnotations: *deployAnn
+  image:
+    pullPolicy: Always
+    tag: "btest"
+
+  ingress:
+    enabled: true
+    hosts:
+      - host: 'btest.xivgear.app'
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+      - secretName: letsencrypt-production-btest
+        hosts:
+          - "btest.xivgear.app"
+
+xivgear-stats-api:
+  deploymentAnnotations: *deployAnn
+  image:
+    pullPolicy: Always
+    repository: ghcr.io/xiv-gear-planner/xivgear-stats-server-test
+    tag: "stats-server"
