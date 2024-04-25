@@ -56,7 +56,7 @@ ingress:
   hosts:
     - host: 'api.xivgear.app'
       paths:
-        - path: /api/(.*)
+        - path: /(.*)
           pathType: ImplementationSpecific
   tls:
     - secretName: letsencrypt-production-api
