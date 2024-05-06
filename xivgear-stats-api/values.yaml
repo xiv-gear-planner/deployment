@@ -103,3 +103,5 @@ tolerations: []
 affinity: {}
 
 revisionHistoryLimit: 3
+
+shortlinkOverride: ''

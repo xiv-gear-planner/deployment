@@ -113,6 +113,7 @@ xivgear-btest:
 
 xivgear-stats-api:
   deploymentAnnotations: *deployAnn
+  shortlinkOverride: 'http://xivgear-xivgear-storage-api:8080/shortlink/'
 
   image:
     pullPolicy: Always
