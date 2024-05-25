@@ -44,4 +44,8 @@ dependencies:
     alias: xivgear-modern
     version: "0.1.0"
     repository: file://../xivgear-beta
+  - name: xivgear-stats-api
+    alias: xivgear-stats-api-beta
+    version: "0.1.0"
+    repository: file://../xivgear-stats-api
 #

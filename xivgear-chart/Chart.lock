@@ -17,5 +17,8 @@ dependencies:
 - name: xivgear-beta
   repository: file://../xivgear-beta
   version: 0.1.0
-digest: sha256:2dcf85f8f871b09401441b75c96eb21d60e6f89c55abdad5a744f94d9d4ecd55
-generated: "2024-05-03T13:13:19.5659079-07:00"
+- name: xivgear-stats-api
+  repository: file://../xivgear-stats-api
+  version: 0.1.0
+digest: sha256:a94b2adc28aa8689050f809916d2c1eb9079059a4551ff607f2d49bfddbb14e1
+generated: "2024-05-22T21:24:49.9586081-07:00"
