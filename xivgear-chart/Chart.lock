@@ -20,5 +20,8 @@ dependencies:
 - name: xivgear-stats-api
   repository: file://../xivgear-stats-api
   version: 0.1.0
-digest: sha256:a94b2adc28aa8689050f809916d2c1eb9079059a4551ff607f2d49bfddbb14e1
-generated: "2024-05-22T21:24:49.9586081-07:00"
+- name: xivgear-preview-injector
+  repository: file://../xivgear-preview-injector
+  version: 0.1.0
+digest: sha256:43ba70daf1df9c9efe335082b9413eef842c8c52053d2fbddc9460b26eb05258
+generated: "2024-05-26T12:41:18.1478965-07:00"
