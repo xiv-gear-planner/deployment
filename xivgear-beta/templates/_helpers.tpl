@@ -22,6 +22,9 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 {{- end }}
 {{- end }}
+{{- define "xivgear-beta.preview-fullname" -}}
+{{- printf "%s-preview" (include "xivgear-beta.fullname" .)}}
+{{- end }}
 
 {{/*
 Create chart name and version as used by the chart label.
@@ -41,6 +44,14 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
+{{- define "xivgear-beta.previewLabels" -}}
+helm.sh/chart: {{ include "xivgear-beta.chart" . }}
+{{ include "xivgear-beta.previewSelectorLabels" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
 
 {{/*
 Selector labels
@@ -48,6 +59,10 @@ Selector labels
 {{- define "xivgear-beta.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "xivgear-beta.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+{{- define "xivgear-beta.previewSelectorLabels" -}}
+app.kubernetes.io/name: {{ include "xivgear-beta.name" . }}-preview
+app.kubernetes.io/instance: {{ .Release.Name }}-preview
 {{- end }}
 
 {{/*

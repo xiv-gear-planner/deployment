@@ -48,7 +48,7 @@ dependencies:
     alias: xivgear-stats-api-beta
     version: "0.1.0"
     repository: file://../xivgear-stats-api
-  - name: xivgear-preview-injector
-    version: "0.1.0"
-    repository: file://../xivgear-preview-injector
+#  - name: xivgear-preview-injector
+#    version: "0.1.0"
+#    repository: file://../xivgear-preview-injector
 #

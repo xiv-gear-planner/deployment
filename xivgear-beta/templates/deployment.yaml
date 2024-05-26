@@ -1,3 +1,4 @@
+{{- $fullName := include "xivgear-beta.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -75,3 +76,90 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+
+---
+{{- if .Values.preview.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "xivgear-beta.preview-fullname" . }}
+  labels:
+    {{- include "xivgear-beta.previewLabels" . | nindent 4 }}
+  {{- with .Values.preview.deploymentAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  revisionHistoryLimit: {{ .Values.preview.revisionHistoryLimit }}
+  {{- if not .Values.preview.autoscaling.enabled }}
+  replicas: {{ .Values.preview.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "xivgear-beta.previewSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "xivgear-beta.previewLabels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "xivgear-beta.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}-preview-injector
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.preview.image.repository }}:{{ .Values.preview.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.preview.image.pullPolicy }}
+          env:
+            - name: 'IS_PREVIEW_SERVER'
+              value: 'true'
+            {{- if .Values.preview.shortlinkOverride }}
+            - name: 'SHORTLINK_SERVER'
+              value: {{ .Values.preview.shortlinkOverride }}
+            {{- end }}
+            - name: 'FRONTEND_SERVER'
+              value: {{ .Values.preview.frontendServerOverride | default (printf "http://%s:%s/" $fullName ( toString $.Values.service.port ) ) }}
+            {{- with (first .Values.ingress.hosts) }}
+            - name: 'FRONTEND_CLIENT'
+              value: {{ $.Values.preview.frontendClientOverride | default (printf "https://%s/" .host ) }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.preview.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /healthcheck
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /healthcheck
+              port: http
+          resources:
+            {{- toYaml .Values.preview.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+{{- end }}
