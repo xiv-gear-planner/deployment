@@ -40,6 +40,15 @@ xivgear-static:
           - "xivgear.app"
           - "www.xivgear.app"
 
+  preview:
+    enabled: true
+    autoscaling:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 4
+      targetCPUUtilizationPercentage: 60
+    replicaCount: 2
+
 xivgear-storage-api:
 
   deploymentAnnotations: *deployAnn
@@ -91,8 +100,10 @@ xivgear-beta:
 
   deploymentAnnotations: *deployAnn
   image:
-    tag: 'url-query-param'
+    tag: 'master'
     pullPolicy: Always
+  preview:
+    enabled: true
 
 xivgear-btest:
 
@@ -101,7 +112,7 @@ xivgear-btest:
   deploymentAnnotations: *deployAnn
   image:
     pullPolicy: Always
-    tag: "url-query-param"
+    tag: "master"
 
   ingress:
     enabled: true
@@ -116,10 +127,7 @@ xivgear-btest:
           - "btest.xivgear.app"
 
   preview:
-    deploymentAnnotations: *deployAnn
     enabled: true
-    image:
-      tag: "url-query-param"
 
 xivgear-stats-api:
   deploymentAnnotations: *deployAnn
@@ -150,7 +158,7 @@ xivgear-modern:
   deploymentAnnotations: *deployAnn
   image:
     pullPolicy: Always
-    tag: "modernize-other-areas"
+    tag: "master"
 
   ingress:
     enabled: true
@@ -163,6 +171,8 @@ xivgear-modern:
       - secretName: letsencrypt-production-modern
         hosts:
           - "modern.xivgear.app"
+  preview:
+    enabled: true
 
 xivgear-stats-api-beta:
   deploymentAnnotations: *deployAnn
@@ -205,34 +215,3 @@ xivgear-stats-api-beta:
       - secretName: letsencrypt-production-api
         hosts:
           - "api.xivgear.app"
-
-#xivgear-preview-injector:
-#  deploymentAnnotations: *deployAnn
-#
-#  shortlinkOverride: 'http://xivgear-xivgear-storage-api:8080/shortlink/'
-#  frontendServerOverride: 'http://xivgear-xivgear-btest:80/'
-#
-#  image:
-#    pullPolicy: Always
-#    repository: ghcr.io/xiv-gear-planner/xivgear-stats-server
-#    tag: "url-query-param"
-#  replicaCount: 1
-#  autoscaling:
-#    enabled: false
-#
-#  ingress:
-#    enabled: true
-#    className: "nginx"
-#    annotations:
-#      kubernetes.io/ingress.class: nginx
-#      nginx.ingress.kubernetes.io/rewrite-target: /preview/$1
-#      cert-manager.io/cluster-issuer: "letsencrypt-production"
-#    hosts:
-#      - host: 'btest.xivgear.app'
-#        paths:
-#          - path: /
-#            pathType: ImplementationSpecific
-#    tls:
-#      - secretName: letsencrypt-production-btest
-#        hosts:
-#          - "btest.xivgear.app"

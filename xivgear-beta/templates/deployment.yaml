@@ -85,7 +85,7 @@ metadata:
   name: {{ include "xivgear-beta.preview-fullname" . }}
   labels:
     {{- include "xivgear-beta.previewLabels" . | nindent 4 }}
-  {{- with .Values.preview.deploymentAnnotations }}
+  {{- with ( coalesce .Values.preview.deploymentAnnotations .Values.deploymentAnnotations ) }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -120,8 +120,8 @@ spec:
         - name: {{ .Chart.Name }}-preview-injector
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.preview.image.repository }}:{{ .Values.preview.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.preview.image.pullPolicy }}
+          image: "{{ .Values.preview.image.repository | default .Values.image.repository }}:{{ coalesce .Values.preview.image.tag .Values.image.tag .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.preview.image.pullPolicy | default .Values.image.pullPolicy }}
           env:
             - name: 'IS_PREVIEW_SERVER'
               value: 'true'

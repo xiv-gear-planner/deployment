@@ -105,13 +105,11 @@ revisionHistoryLimit: 3
 
 preview:
   enabled: false
-  deploymentAnnotations:
-    keel.sh/policy: "force"
+  deploymentAnnotations: {}
   image:
     repository: ghcr.io/xiv-gear-planner/xivgear-stats-server
     pullPolicy: Always
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: "master"
+    tag: ""
   service:
     type: ClusterIP
     port: 30000

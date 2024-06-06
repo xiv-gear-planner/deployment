@@ -106,3 +106,31 @@ tolerations: []
 affinity: {}
 
 revisionHistoryLimit: 3
+
+preview:
+  enabled: true
+  deploymentAnnotations: {}
+  image:
+    repository: ghcr.io/xiv-gear-planner/xivgear-stats-server
+    pullPolicy: Always
+    tag: ""
+  service:
+    type: ClusterIP
+    port: 30000
+  autoscaling:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 4
+    targetCPUUtilizationPercentage: 60
+  revisionHistoryLimit: 3
+  replicaCount: 2
+  shortlinkOverride: ''
+  frontendServerOverride: ''
+  frontendClientOverride: ''
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 1200m
+      memory: 4096Mi

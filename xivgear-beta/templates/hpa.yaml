@@ -35,14 +35,14 @@ spec:
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "xivgear-beta.fullname" . }}
+  name: {{ include "xivgear-beta.preview-fullname" . }}
   labels:
     {{- include "xivgear-beta.previewLabels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "xivgear-beta.fullname" . }}
+    name: {{ include "xivgear-beta.preview-fullname" . }}
   minReplicas: {{ .Values.preview.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.preview.autoscaling.maxReplicas }}
   metrics:
