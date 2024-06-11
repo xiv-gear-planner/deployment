@@ -20,5 +20,8 @@ dependencies:
 - name: xivgear-stats-api
   repository: file://../xivgear-stats-api
   version: 0.1.0
-digest: sha256:a94b2adc28aa8689050f809916d2c1eb9079059a4551ff607f2d49bfddbb14e1
-generated: "2024-05-26T14:46:34.0387312-07:00"
+- name: xivgear-mathcorner
+  repository: file://../xivgear-mathcorner
+  version: 0.1.0
+digest: sha256:71d6767313d7cdc2bcbee8386c7d3a1d8dae78e6763f61c0c513ad3e3e09e0f0
+generated: "2024-06-10T16:04:18.4590858-07:00"

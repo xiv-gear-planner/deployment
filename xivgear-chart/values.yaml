@@ -215,3 +215,17 @@ xivgear-stats-api-beta:
       - secretName: letsencrypt-production-api
         hosts:
           - "api.xivgear.app"
+
+xivgear-mathcorner:
+
+  deploymentAnnotations: *deployAnn
+  image:
+    pullPolicy: Always
+    tag: "math-page"
+  ingress:
+    tls:
+      - secretName: letsencrypt-production-static-new
+        hosts:
+          - "ok.xivgear.app"
+          - "xivgear.app"
+          - "www.xivgear.app"

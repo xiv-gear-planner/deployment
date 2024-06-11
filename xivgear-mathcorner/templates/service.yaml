@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "xivgear-static.fullname" . }}
+  labels:
+    {{- include "xivgear-static.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "xivgear-static.selectorLabels" . | nindent 4 }}
+---
+{{- if .Values.preview.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "xivgear-static.preview-fullname" . }}
+  labels:
+    {{- include "xivgear-static.previewLabels" . | nindent 4 }}
+spec:
+  type: {{ .Values.preview.service.type }}
+  ports:
+    - port: {{ .Values.preview.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "xivgear-static.previewSelectorLabels" . | nindent 4 }}
+{{- end }}
