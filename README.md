@@ -33,3 +33,5 @@ By default, k8s ingress rules are used to control routing. If your domain is foo
 - api.foo.com/(.*) is routed to the API
 - api.foo.com/fulldata/(.*) is routed to the stat calculator API
 - foo.com/math/(.+) is routed to the math corner
+
+In addition, there are several subdomains for beta releases, such as atest.xivgear.app, btest.xivgear.app, etc.
