@@ -221,7 +221,7 @@ xivgear-mathcorner:
   deploymentAnnotations: *deployAnn
   image:
     pullPolicy: Always
-    tag: "math-page"
+    tag: "master"
   ingress:
     tls:
       - secretName: letsencrypt-production-static-new

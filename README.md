@@ -17,3 +17,19 @@ branch.
 
 To deploy any additional microservices, set up a CI/CD build to publish them as a container image,
 and then add another sub-chart here.
+
+## Structure
+
+The structure of a real deployment involves:
+- Static files
+- Preview API (social media previews)
+- Stat calculator API (allows calculating of actual set stats via API)
+- Storage API (stores and retrieves shared sets, also handles the legacy social media previews)
+- Math corner static files
+
+By default, k8s ingress rules are used to control routing. If your domain is foo.com, then the typical way you would set this up is:
+- foo.com/(.+) is routed to the static files
+- foo.com/ is routed to the preview API, which proxies through to the static files but injects the preview info
+- api.foo.com/(.*) is routed to the API
+- api.foo.com/fulldata/(.*) is routed to the stat calculator API
+- foo.com/math/(.+) is routed to the math corner
