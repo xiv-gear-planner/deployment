@@ -51,3 +51,7 @@ dependencies:
   - name: xivgear-mathcorner
     version: "0.1.0"
     repository: file://../xivgear-mathcorner
+  - name: xivgear-mathcorner
+    alias: xivgear-mathcorner-beta
+    version: "0.1.0"
+    repository: file://../xivgear-mathcorner

@@ -23,5 +23,8 @@ dependencies:
 - name: xivgear-mathcorner
   repository: file://../xivgear-mathcorner
   version: 0.1.0
-digest: sha256:71d6767313d7cdc2bcbee8386c7d3a1d8dae78e6763f61c0c513ad3e3e09e0f0
-generated: "2024-06-10T16:04:18.4590858-07:00"
+- name: xivgear-mathcorner
+  repository: file://../xivgear-mathcorner
+  version: 0.1.0
+digest: sha256:2731428aaab4e8bf5c8b29e8ccaeb80901c2e919e988269d2cc15ff5768e5830
+generated: "2024-06-26T13:59:22.6045263-07:00"

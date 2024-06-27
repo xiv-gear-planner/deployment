@@ -221,8 +221,35 @@ xivgear-mathcorner:
   deploymentAnnotations: *deployAnn
   image:
     pullPolicy: Always
-    tag: "master"
+    tag: "prod"
   ingress:
+    tls:
+      - secretName: letsencrypt-production-static-new
+        hosts:
+          - "ok.xivgear.app"
+          - "xivgear.app"
+          - "www.xivgear.app"
+
+xivgear-mathcorner-beta:
+
+  deploymentAnnotations: *deployAnn
+  image:
+    pullPolicy: Always
+    tag: "level-100"
+  ingress:
+    hosts:
+      - host: 'xivgear.app'
+        paths:
+          - path: &path /math100/(.*)
+            pathType: ImplementationSpecific
+      - host: 'ok.xivgear.app'
+        paths:
+          - path: *path
+            pathType: ImplementationSpecific
+      - host: 'www.xivgear.app'
+        paths:
+          - path: *path
+            pathType: ImplementationSpecific
     tls:
       - secretName: letsencrypt-production-static-new
         hosts:
