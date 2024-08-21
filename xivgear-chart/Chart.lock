@@ -17,14 +17,14 @@ dependencies:
 - name: xivgear-beta
   repository: file://../xivgear-beta
   version: 0.1.0
-- name: xivgear-stats-api
-  repository: file://../xivgear-stats-api
+- name: xivgear-beta
+  repository: file://../xivgear-beta
   version: 0.1.0
 - name: xivgear-mathcorner
   repository: file://../xivgear-mathcorner
   version: 0.1.0
-- name: xivgear-mathcorner
-  repository: file://../xivgear-mathcorner
+- name: xivgear-data-api
+  repository: file://../xivgear-data-api
   version: 0.1.0
-digest: sha256:2731428aaab4e8bf5c8b29e8ccaeb80901c2e919e988269d2cc15ff5768e5830
-generated: "2024-06-26T13:59:22.6045263-07:00"
+digest: sha256:e5d5ac1cfd7ecf44c5e973c1deababcec5eb8e6fdbbe7ec13f5c846c10054d99
+generated: "2024-08-21T09:32:13.0270815-07:00"

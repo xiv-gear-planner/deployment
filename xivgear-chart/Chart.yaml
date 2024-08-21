@@ -37,6 +37,10 @@ dependencies:
     version: "0.1.0"
     repository: file://../xivgear-beta
   - name: xivgear-beta
+    alias: xivgear-atest
+    version: "0.1.0"
+    repository: file://../xivgear-beta
+  - name: xivgear-beta
     alias: xivgear-btest
     version: "0.1.0"
     repository: file://../xivgear-beta
@@ -44,14 +48,17 @@ dependencies:
     alias: xivgear-modern
     version: "0.1.0"
     repository: file://../xivgear-beta
-  - name: xivgear-stats-api
-    alias: xivgear-stats-api-beta
-    version: "0.1.0"
-    repository: file://../xivgear-stats-api
+#  - name: xivgear-stats-api
+#    alias: xivgear-stats-api-beta
+#    version: "0.1.0"
+#    repository: file://../xivgear-stats-api
   - name: xivgear-mathcorner
     version: "0.1.0"
     repository: file://../xivgear-mathcorner
-  - name: xivgear-mathcorner
-    alias: xivgear-mathcorner-beta
+#  - name: xivgear-mathcorner
+#    alias: xivgear-mathcorner-beta
+#    version: "0.1.0"
+#    repository: file://../xivgear-mathcorner
+  - name: xivgear-data-api
     version: "0.1.0"
-    repository: file://../xivgear-mathcorner
+    repository: file://../xivgear-data-api
