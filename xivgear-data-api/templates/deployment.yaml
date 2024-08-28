@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "xivgear-storage-api.fullname" . }}
+  name: {{ include "xivgear-data-api.fullname" . }}
   labels:
-    {{- include "xivgear-storage-api.labels" . | nindent 4 }}
+    {{- include "xivgear-data-api.labels" . | nindent 4 }}
   {{- with .Values.deploymentAnnotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -15,7 +15,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "xivgear-storage-api.selectorLabels" . | nindent 6 }}
+      {{- include "xivgear-data-api.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -23,7 +23,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "xivgear-storage-api.labels" . | nindent 8 }}
+        {{- include "xivgear-data-api.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -32,7 +32,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "xivgear-storage-api.serviceAccountName" . }}
+      serviceAccountName: {{ include "xivgear-data-api.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -41,17 +41,21 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.shortlinkOverride }}
+          envFrom:
+            - secretRef:
+                name: "{{ .Values.propsSecretName }}"
           env:
-          - name: 'SHORTLINK_SERVER'
-            value: {{ .Values.shortlinkOverride }}
-          {{- end }}
+            - name: ORACLE_CLOUD_PEM_PATH
+              value: /config/certs/cert.pem
+            - name: OBJECT_STORAGE_BUCKET_NAME
+              value: "{{ .Values.objectStorageBucket }}"
+            - name: MICRONAUT_ENVIRONMENTS
+              value: prodoci
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           livenessProbe:
-            # TODO: use a call that causes an actual DB read, to keep it warm
             httpGet:
               path: /healthz
               port: http
@@ -61,14 +65,22 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+            {{- with .Values.volumeMounts }}
+              {{- toYaml . | nindent 12 | default "" }}
+            {{- end }}
+            # Volume mount for cert
+            - name: certvol
+              mountPath: "/config/certs/"
+              readOnly: true
       volumes:
         {{- with .Values.volumes }}
           {{- toYaml . | nindent 8 | default "" }}
         {{- end }}
+        # Volume for cert
+        - name: certvol
+          secret:
+            secretName: "{{ .Values.keySecretName }}"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

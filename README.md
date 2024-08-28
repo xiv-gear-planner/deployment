@@ -26,6 +26,7 @@ The structure of a real deployment involves:
 - Stat calculator API (allows calculating of actual set stats via API)
 - Storage API (stores and retrieves shared sets, also handles the legacy social media previews)
 - Math corner static files
+- Data API (ingests from xivapi and holds data)
 
 By default, k8s ingress rules are used to control routing. If your domain is foo.com, then the typical way you would set this up is:
 - foo.com/(.+) is routed to the static files
@@ -35,3 +36,7 @@ By default, k8s ingress rules are used to control routing. If your domain is foo
 - foo.com/math/(.+) is routed to the math corner
 
 In addition, there are several subdomains for beta releases, such as atest.xivgear.app, btest.xivgear.app, etc.
+
+Finally, in terms of storage:
+- Data API uses OCI object storage (or local storage for testing)
+- Storage API uses Oracle NoSQL (this will be changed to object storage at some point)

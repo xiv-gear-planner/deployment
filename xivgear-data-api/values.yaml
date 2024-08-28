@@ -105,3 +105,8 @@ affinity: {}
 revisionHistoryLimit: 3
 
 shortlinkOverride: ''
+
+keySecretName: oracle-objectstorage-key-secret
+propsSecretName: oracle-objectstorage-secret
+
+objectStorageBucket: 'xivgear-data'
