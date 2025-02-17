@@ -133,6 +133,7 @@ preview:
   shortlinkOverride: ''
   frontendServerOverride: ''
   frontendClientOverride: ''
+  extraScripts: ''
   resources:
     requests:
       cpu: 200m

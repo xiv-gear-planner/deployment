@@ -42,6 +42,7 @@ xivgear-static:
 
   preview:
     enabled: true
+    extraScripts: 'https://s.nitropay.com/ads-2008.js'
     autoscaling:
       enabled: true
       minReplicas: 2
@@ -124,6 +125,7 @@ xivgear-atest:
     pullPolicy: Always
   preview:
     enabled: true
+    extraScripts: 'https://s.nitropay.com/ads-2008.js'
 
   ingress:
     enabled: true
@@ -184,27 +186,62 @@ xivgear-stats-api:
     maxReplicas: 8
     targetCPUUtilizationPercentage: 70
 
-
-xivgear-modern:
-  nameOverride: xivgear-modern
+xivgear-stats-api-beta:
   deploymentAnnotations: *deployAnn
+  shortlinkOverride: 'http://xivgear-xivgear-storage-api:8080/shortlink/'
+
   image:
     pullPolicy: Always
-    tag: "master"
+    repository: ghcr.io/xiv-gear-planner/xivgear-stats-server
+    # TODO
+#    tag: "master"
+    tag: "fulldata-better-endpoints"
+
+  resources:
+    requests:
+      cpu: 200m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 1024Mi
+
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 2
+    targetCPUUtilizationPercentage: 90
 
   ingress:
-    enabled: true
     hosts:
-      - host: 'modern.xivgear.app'
+      - host: 'betaapi.xivgear.app'
         paths:
-          - path: /
+          - path: /fulldata/(.*)
             pathType: ImplementationSpecific
     tls:
-      - secretName: letsencrypt-production-modern
+      - secretName: letsencrypt-production-beta-api
         hosts:
-          - "modern.xivgear.app"
-  preview:
-    enabled: true
+          - "betaapi.xivgear.app"
+
+#xivgear-modern:
+#  nameOverride: xivgear-modern
+#  deploymentAnnotations: *deployAnn
+#  image:
+#    pullPolicy: Always
+#    tag: "master"
+#
+#  ingress:
+#    enabled: true
+#    hosts:
+#      - host: 'modern.xivgear.app'
+#        paths:
+#          - path: /
+#            pathType: ImplementationSpecific
+#    tls:
+#      - secretName: letsencrypt-production-modern
+#        hosts:
+#          - "modern.xivgear.app"
+#  preview:
+#    enabled: true
 
 #xivgear-stats-api-beta:
 #  deploymentAnnotations: *deployAnn
@@ -295,7 +332,7 @@ xivgear-data-api:
 
   image:
     pullPolicy: Always
-#    tag: "data-persistence"
+    tag: "prod"
 
   resources:
     requests:
@@ -303,13 +340,14 @@ xivgear-data-api:
       memory: 512Mi
     limits:
       cpu: 1500m
+      # Can almost certainly be reduced if needed
       memory: 4096Mi
 
   autoscaling:
     enabled: true
     minReplicas: 2
     maxReplicas: 3
-    targetCPUUtilizationPercentage: 75
+    targetCPUUtilizationPercentage: 200
 
 xivgear-data-api-beta:
 
@@ -317,7 +355,7 @@ xivgear-data-api-beta:
 
   image:
     pullPolicy: Always
-#    tag: "data-persistence"
+    tag: "master"
 
   resources:
     requests:

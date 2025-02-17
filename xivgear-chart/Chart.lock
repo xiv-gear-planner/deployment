@@ -17,8 +17,8 @@ dependencies:
 - name: xivgear-beta
   repository: file://../xivgear-beta
   version: 0.1.0
-- name: xivgear-beta
-  repository: file://../xivgear-beta
+- name: xivgear-stats-api
+  repository: file://../xivgear-stats-api
   version: 0.1.0
 - name: xivgear-mathcorner
   repository: file://../xivgear-mathcorner
@@ -32,5 +32,5 @@ dependencies:
 - name: xivgear-obj-storage-secret
   repository: file://../xivgear-obj-storage-secret
   version: 0.1.0
-digest: sha256:54746dc648aebe30e95a9b271483754b5a12f3a24ccc06bf52b6a98459c2b7c9
-generated: "2024-08-28T12:26:45.4405089-07:00"
+digest: sha256:48d419aef627abe4a1f130ce15f90bead3b24ef3a38849f11cdb689aa3f89646
+generated: "2024-11-09T17:34:30.459973-08:00"

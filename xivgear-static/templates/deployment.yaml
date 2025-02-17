@@ -135,6 +135,10 @@ spec:
             - name: 'FRONTEND_CLIENT'
               value: {{ $.Values.preview.frontendClientOverride | default (printf "https://%s/" .host ) }}
             {{- end }}
+            {{- if .Values.preview.extraScripts }}
+            - name: 'EXTRA_SCRIPTS'
+              value: {{ $.Values.preview.extraScripts }}
+            {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.preview.service.port }}
