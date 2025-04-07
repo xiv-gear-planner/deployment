@@ -5,6 +5,9 @@ dependencies:
 - name: xivgear-storage-api
   repository: file://../xivgear-storage-api
   version: 0.1.0
+- name: xivgear-storage-api
+  repository: file://../xivgear-storage-api
+  version: 0.1.0
 - name: xivgear-stats-api
   repository: file://../xivgear-stats-api
   version: 0.1.0
@@ -32,5 +35,5 @@ dependencies:
 - name: xivgear-obj-storage-secret
   repository: file://../xivgear-obj-storage-secret
   version: 0.1.0
-digest: sha256:48d419aef627abe4a1f130ce15f90bead3b24ef3a38849f11cdb689aa3f89646
-generated: "2024-11-09T17:34:30.459973-08:00"
+digest: sha256:7764cdaeb823a61653b5ca577e6eb225434bba232d7edcba826653029927d75f
+generated: "2025-04-07T14:15:55.4856072-07:00"

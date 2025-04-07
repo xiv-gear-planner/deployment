@@ -30,6 +30,10 @@ dependencies:
   - name: xivgear-storage-api
     version: "0.1.0"
     repository: file://../xivgear-storage-api
+  - name: xivgear-storage-api
+    alias: xivgear-storage-api-beta
+    version: "0.1.0"
+    repository: file://../xivgear-storage-api
   - name: xivgear-stats-api
     version: "0.1.0"
     repository: file://../xivgear-stats-api
