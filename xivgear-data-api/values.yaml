@@ -110,3 +110,5 @@ keySecretName: oracle-objectstorage-key-secret
 propsSecretName: oracle-objectstorage-secret
 
 objectStorageBucket: 'xivgear-data'
+
+priorityClassName: prod-critical

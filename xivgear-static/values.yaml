@@ -113,8 +113,11 @@ affinity: {}
 
 revisionHistoryLimit: 3
 
+priorityClassName: prod-critical
+
 preview:
   enabled: true
+  priorityClassName: prod-non-critical
   deploymentAnnotations: {}
   image:
     repository: ghcr.io/xiv-gear-planner/xivgear-stats-server

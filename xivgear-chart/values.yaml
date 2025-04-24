@@ -97,6 +97,8 @@ xivgear-storage-api:
 
 xivgear-storage-api-beta:
 
+  priorityClassName: non-prod-critical
+
   deploymentAnnotations: *deployAnn
 
   image:
@@ -144,6 +146,7 @@ xivgear-storage-api-beta:
 
 xivgear-beta:
 
+  podAntiAffinity: true
   deploymentAnnotations: *deployAnn
   image:
     tag: 'master'
@@ -162,6 +165,9 @@ xivgear-beta:
       - secretName: letsencrypt-production-beta
         hosts:
           - "beta.xivgear.app"
+  affinity:
+#    node
+
 
 xivgear-atest:
 
@@ -226,10 +232,6 @@ xivgear-stats-api:
       cpu: 1000m
       memory: 2048Mi
 
-  ingress:
-    annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /fulldata/$1
-
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -238,6 +240,7 @@ xivgear-stats-api:
 
 xivgear-stats-api-beta:
   deploymentAnnotations: *deployAnn
+  priorityClassName: non-prod-non-critical
   shortlinkOverride: 'http://xivgear-xivgear-storage-api:8080/shortlink/'
 
   image:
@@ -400,6 +403,8 @@ xivgear-data-api:
     targetCPUUtilizationPercentage: 200
 
 xivgear-data-api-beta:
+
+  priorityClassName: non-prod-critical
 
   deploymentAnnotations: *deployAnn
 

@@ -51,15 +51,13 @@ ingress:
   enabled: true
   className: "nginx"
   annotations:
-     kubernetes.io/ingress.class: nginx
-#    nginx.ingress.kubernetes.io/rewrite-target: /$1$2
-     nginx.ingress.kubernetes.io/rewrite-target: /fulldata/$1
-     cert-manager.io/cluster-issuer: "letsencrypt-production"
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /$1$2
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
   hosts:
     - host: 'api.xivgear.app'
       paths:
-#        - path: /(fulldata|basedata|validateEmbed)(.*)
-        - path: /fulldata/(.*)
+        - path: /(fulldata|basedata|validateEmbed)(.*)
           pathType: ImplementationSpecific
   tls:
     - secretName: letsencrypt-production-api
@@ -107,3 +105,5 @@ affinity: {}
 revisionHistoryLimit: 3
 
 shortlinkOverride: ''
+
+priorityClassName: prod-non-critical

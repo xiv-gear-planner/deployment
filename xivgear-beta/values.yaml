@@ -100,11 +100,15 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+podAntiAffinity: true
 
 revisionHistoryLimit: 3
 
+priorityClassName: non-prod-critical
+
 preview:
   enabled: false
+  priorityClassName: non-prod-non-critical
   deploymentAnnotations: {}
   image:
     repository: ghcr.io/xiv-gear-planner/xivgear-stats-server

@@ -1,0 +1,5 @@
+priorities:
+  prodCritical: -100
+  prodNonCritical: -150
+  nonProdCritical: -200
+  nonProdNonCritical: -250

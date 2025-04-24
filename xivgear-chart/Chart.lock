@@ -35,5 +35,8 @@ dependencies:
 - name: xivgear-obj-storage-secret
   repository: file://../xivgear-obj-storage-secret
   version: 0.1.0
-digest: sha256:7764cdaeb823a61653b5ca577e6eb225434bba232d7edcba826653029927d75f
-generated: "2025-04-07T14:15:55.4856072-07:00"
+- name: xivgear-misc
+  repository: file://../xivgear-misc
+  version: 0.1.0
+digest: sha256:87c0432806ff13d0b89f1f60aadf27a1e9dbc4dd8de91517e73631bb5c35e3c1
+generated: "2025-04-16T10:54:45.6024048-07:00"

@@ -117,6 +117,8 @@ affinity: {}
 
 revisionHistoryLimit: 3
 
+priorityClassName: prod-non-critical
+
 # TODO: preview is useless here
 preview:
   enabled: false

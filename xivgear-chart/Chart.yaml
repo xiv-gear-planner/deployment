@@ -73,3 +73,6 @@ dependencies:
   - name: xivgear-obj-storage-secret
     version: "0.1.0"
     repository: file://../xivgear-obj-storage-secret
+  - name: xivgear-misc
+    version: "0.1.0"
+    repository: file://../xivgear-misc

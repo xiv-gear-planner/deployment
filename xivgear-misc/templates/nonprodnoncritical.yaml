@@ -1,0 +1,8 @@
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: non-prod-non-critical
+value: {{ .Values.priorities.nonProdNonCritical }}
+preemptionPolicy: Never
+globalDefault: false
+description: "Used for non-critical non-prod workloads such as previews"
