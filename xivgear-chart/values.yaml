@@ -94,17 +94,17 @@ xivgear-storage-api:
 
   resources:
     requests:
-      cpu: 200m
+      cpu: 150m
       memory: 512Mi
     limits:
-      cpu: 2000m
-      memory: 4096Mi
+      cpu: 1500m
+      memory: 1024Mi
 
   autoscaling:
     enabled: true
     minReplicas: 2
     maxReplicas: 8
-    targetCPUUtilizationPercentage: 120
+    targetCPUUtilizationPercentage: 600
 
 
 xivgear-storage-api-beta:
@@ -146,8 +146,8 @@ xivgear-storage-api-beta:
       cpu: 100m
       memory: 256Mi
     limits:
-      cpu: 500m
-      memory: 1024Mi
+      cpu: 250m
+      memory: 512Mi
 
   autoscaling:
     enabled: true
@@ -242,7 +242,7 @@ xivgear-stats-api:
       memory: 256Mi
     limits:
       cpu: 1000m
-      memory: 2048Mi
+      memory: 512Mi
 
   autoscaling:
     enabled: true
@@ -401,18 +401,18 @@ xivgear-data-api:
 
   resources:
     requests:
-      cpu: 300m
+      cpu: 250m
       memory: 512Mi
     limits:
       cpu: 1500m
       # Can almost certainly be reduced if needed
-      memory: 4096Mi
+      memory: 1536Mi
 
   autoscaling:
     enabled: true
     minReplicas: 2
-    maxReplicas: 3
-    targetCPUUtilizationPercentage: 200
+    maxReplicas: 4
+    targetCPUUtilizationPercentage: 400
 
 xivgear-data-api-beta:
 
@@ -426,11 +426,11 @@ xivgear-data-api-beta:
 
   resources:
     requests:
-      cpu: 100m
+      cpu: 80m
       memory: 512Mi
     limits:
       cpu: 1000m
-      memory: 1024Mi
+      memory: 640Mi
 
   replicaCount: 1
   autoscaling:

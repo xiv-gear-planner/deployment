@@ -130,7 +130,7 @@ preview:
     enabled: false
     minReplicas: 2
     maxReplicas: 4
-    targetCPUUtilizationPercentage: 60
+    targetCPUUtilizationPercentage: 80
   revisionHistoryLimit: 3
   replicaCount: 2
   shortlinkOverride: ''
@@ -143,4 +143,4 @@ preview:
       memory: 256Mi
     limits:
       cpu: 1200m
-      memory: 2048Mi
+      memory: 1024Mi
