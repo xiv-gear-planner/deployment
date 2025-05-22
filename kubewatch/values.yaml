@@ -1,0 +1,25 @@
+rbac:
+  create: true
+resourcesToWatch:
+  deployment: true
+  replicationcontroller: false
+  replicaset: true
+  daemonset: true
+  services: true
+  pod: true
+  job: true
+  node: false
+  clusterrole: false
+  clusterrolebinding: false
+  serviceaccount: false
+  persistentvolume: false
+  namespace: true
+  secret: true
+  configmap: false
+  ingress: true
+  coreevent: false
+  event: false
+webhook:
+  enabled: false
+slack:
+  enabled: false

@@ -143,4 +143,4 @@ preview:
       memory: 256Mi
     limits:
       cpu: 1200m
-      memory: 1024Mi
+      memory: 384Mi

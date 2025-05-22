@@ -6,7 +6,7 @@ xivgear-static:
     keel.sh/pollSchedule: "@every 2m"
     keel.sh/match-tag: "true"
 
-  replicaCount: 2
+  replicaCount: 3
 
   image:
     pullPolicy: Always
@@ -43,10 +43,10 @@ xivgear-static:
   resources:
     requests:
       cpu: 100m
-      memory: 256Mi
+      memory: 64Mi
     limits:
       cpu: 1000m
-      memory: 1024Mi
+      memory: 128Mi
 
 
   preview:
@@ -95,10 +95,10 @@ xivgear-storage-api:
   resources:
     requests:
       cpu: 150m
-      memory: 512Mi
+      memory: 384Mi
     limits:
       cpu: 1500m
-      memory: 1024Mi
+      memory: 768Mi
 
   autoscaling:
     enabled: true
@@ -263,10 +263,10 @@ xivgear-stats-api-beta:
   resources:
     requests:
       cpu: 50m
-      memory: 256Mi
+      memory: 192Mi
     limits:
       cpu: 500m
-      memory: 1024Mi
+      memory: 256Mi
 
   autoscaling:
     enabled: true
