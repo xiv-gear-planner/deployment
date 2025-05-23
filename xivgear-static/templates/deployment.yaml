@@ -77,7 +77,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-
+      {{- include "xivgear-commonlib.podSpread" . | nindent 6 }}
 ---
 {{- if .Values.preview.enabled }}
 apiVersion: apps/v1
@@ -167,5 +167,6 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- include "xivgear-commonlib.podSpread" . | nindent 6 }}
 
 {{- end }}

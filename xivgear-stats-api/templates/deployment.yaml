@@ -82,3 +82,4 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- include "xivgear-commonlib.podSpread" . | nindent 6 }}
