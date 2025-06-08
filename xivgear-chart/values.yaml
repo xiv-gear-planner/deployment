@@ -449,3 +449,27 @@ xivgear-data-api-beta:
           - "betadata.xivgear.app"
 
   objectStorageBucket: 'xivgear-data-beta'
+
+xivgear-account-service:
+  deploymentAnnotations: *deployAnn
+  priorityClassName: prod-critical
+  image:
+    pullPolicy: Always
+    tag: "main"
+
+  replicaCount: 1
+  autoscaling:
+    enabled: false
+    minReplicas: 2
+    maxReplicas: 4
+    targetCPUUtilizationPercentage: 800
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 1000m
+      memory: 280Mi
+
+  createTables: "false"

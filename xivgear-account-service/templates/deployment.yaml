@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "xivgear-storage-api.fullname" . }}
+  name: {{ include "xivgear-data-api.fullname" . }}
   labels:
-    {{- include "xivgear-storage-api.labels" . | nindent 4 }}
+    {{- include "xivgear-data-api.labels" . | nindent 4 }}
   {{- with .Values.deploymentAnnotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -15,7 +15,7 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      {{- include "xivgear-storage-api.selectorLabels" . | nindent 6 }}
+      {{- include "xivgear-data-api.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -23,7 +23,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "xivgear-storage-api.labels" . | nindent 8 }}
+        {{- include "xivgear-data-api.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -33,7 +33,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "xivgear-storage-api.serviceAccountName" . }}
+      serviceAccountName: {{ include "xivgear-data-api.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -43,22 +43,39 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
+            # NoSQL secrets
             - secretRef:
                 name: oracle-nosql-props-secret
+            # Email secrest
+            - secretRef:
+                name: oracle-email-props
+            # JWT secret
+            - secretRef:
+                name: jwt-key
+{{/*            - secretRef:*/}}
+{{/*                name: oracle-objectstorage-secret*/}}
           env:
-            - name: pemPath
+            - name: ORACLE_CLOUD_PEM_PATH
               value: /config/certs/cert.pem
+            - name: MICRONAUT_ENVIRONMENTS
+              value: prodoci
+            - name: ORACLE_CLOUD_NOSQL_CREATE_TABLES
+              value: {{ .Values.createTables | quote }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           livenessProbe:
+            initialDelaySeconds: 5
+            failureThreshold: 5
             httpGet:
-              path: /healthcheck
+              path: /healthz
               port: http
           readinessProbe:
+            initialDelaySeconds: 5
+            failureThreshold: 5
             httpGet:
-              path: /healthcheck
+              path: /readyz
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

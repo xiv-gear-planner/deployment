@@ -76,3 +76,6 @@ dependencies:
   - name: xivgear-misc
     version: "0.1.0"
     repository: file://../xivgear-misc
+  - name: xivgear-account-service
+    version: "0.1.0"
+    repository: file://../xivgear-account-service
