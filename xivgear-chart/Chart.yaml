@@ -79,3 +79,6 @@ dependencies:
   - name: xivgear-account-service
     version: "0.1.0"
     repository: file://../xivgear-account-service
+  - name: xivgear-userdata-service
+    version: "0.1.0"
+    repository: file://../xivgear-userdata-service
