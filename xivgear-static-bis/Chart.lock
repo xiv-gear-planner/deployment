@@ -1,0 +1,6 @@
+dependencies:
+- name: xivgear-commonlib
+  repository: file://../xivgear-commonlib
+  version: 0.1.0
+digest: sha256:78959b77310050edd9df499bcba2708a3a3c25bd8ae5a2d83966a14fdc422115
+generated: "2025-05-22T17:04:02.0442369-07:00"

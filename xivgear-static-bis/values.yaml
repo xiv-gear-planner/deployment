@@ -1,12 +1,12 @@
-# Default values for xivgear-storage-api.
+# Default values for xivgear-static-bis.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 2
 
 image:
-  repository: ghcr.io/xiv-gear-planner/gear-planner-server
-  pullPolicy: IfNotPresent
+  repository: ghcr.io/xiv-gear-planner/xivgear-static-bis
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "main"
 
@@ -45,7 +45,7 @@ securityContext: { }
 
 service:
   type: ClusterIP
-  port: 8080
+  port: 80
 
 ingress:
   enabled: true
@@ -54,31 +54,26 @@ ingress:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /$1
   hosts:
-    - host: 'api.xivgear.app'
-      paths:
-        - path: /(.*)
-          pathType: ImplementationSpecific
-    - host: 'share.xivgear.app'
+    - host: 'staticbis.xivgear.app'
       paths:
         - path: /(.*)
           pathType: ImplementationSpecific
   tls:
-    - secretName: letsencrypt-production-api
+    - secretName: letsencrypt-production-staticbis
       hosts:
-        - "api.xivgear.app"
-        - "share.xivgear.app"
+        - "staticbis.xivgear.app"
 
-resources: { }
+resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-#   memory: 128Mi
+   limits:
+     cpu: 200m
+     memory: 32Mi
+   requests:
+     cpu: 30m
+     memory: 16Mi
 
 autoscaling:
   enabled: false

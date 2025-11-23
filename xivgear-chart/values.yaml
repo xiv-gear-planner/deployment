@@ -19,7 +19,7 @@ xivgear-static:
       kubernetes.io/ingress.class: nginx
       cert-manager.io/cluster-issuer: "letsencrypt-production"
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
-#      nginx.ingress.kubernetes.io/rewrite-target: /$1
+    #      nginx.ingress.kubernetes.io/rewrite-target: /$1
     hosts:
       - host: 'xivgear.app'
         paths:
@@ -59,6 +59,14 @@ xivgear-static:
       targetCPUUtilizationPercentage: 60
     replicaCount: 2
 
+    resources:
+      requests:
+        cpu: 200m
+        memory: 256Mi
+      limits:
+        cpu: 1200m
+        memory: 320Mi
+
 
 
 xivgear-storage-api:
@@ -95,10 +103,10 @@ xivgear-storage-api:
   resources:
     requests:
       cpu: 150m
-      memory: 384Mi
+      memory: 256Mi
     limits:
       cpu: 1500m
-      memory: 768Mi
+      memory: 320Mi
 
   autoscaling:
     enabled: true
@@ -115,7 +123,7 @@ xivgear-storage-api-beta:
 
   image:
     pullPolicy: Always
-#    tag: "add-ips-and-backup"
+  #    tag: "add-ips-and-backup"
 
   ingress:
     enabled: true
@@ -144,10 +152,10 @@ xivgear-storage-api-beta:
   resources:
     requests:
       cpu: 50m
-      memory: 256Mi
+      memory: 192Mi
     limits:
       cpu: 250m
-      memory: 512Mi
+      memory: 240Mi
 
   replicaCount: 1
   autoscaling:
@@ -158,7 +166,7 @@ xivgear-beta:
   podAntiAffinity: true
   deploymentAnnotations: *deployAnn
   image:
-    tag: 'master'
+    tag: 'main'
     pullPolicy: Always
   preview:
     enabled: true
@@ -179,7 +187,7 @@ xivgear-atest:
 
   deploymentAnnotations: *deployAnn
   image:
-    tag: 'master'
+    tag: 'main'
     pullPolicy: Always
   preview:
     enabled: true
@@ -204,7 +212,7 @@ xivgear-btest:
   deploymentAnnotations: *deployAnn
   image:
     pullPolicy: Always
-    tag: "sheet-sync"
+    tag: "main"
 
   ingress:
     enabled: true
@@ -232,11 +240,11 @@ xivgear-stats-api:
 
   resources:
     requests:
-      cpu: 200m
+      cpu: 100m
       memory: 256Mi
     limits:
       cpu: 1000m
-      memory: 512Mi
+      memory: 320Mi
 
   autoscaling:
     enabled: true
@@ -252,7 +260,7 @@ xivgear-stats-api-beta:
   image:
     pullPolicy: Always
     repository: ghcr.io/xiv-gear-planner/xivgear-stats-server
-    tag: "master"
+    tag: "main"
 
   resources:
     requests:
@@ -284,7 +292,7 @@ xivgear-stats-api-beta:
 #  deploymentAnnotations: *deployAnn
 #  image:
 #    pullPolicy: Always
-#    tag: "master"
+#    tag: "main"
 #
 #  ingress:
 #    enabled: true
@@ -369,7 +377,7 @@ xivgear-mathcorner:
 #  deploymentAnnotations: *deployAnn
 #  image:
 #    pullPolicy: Always
-#    tag: "master"
+#    tag: "main"
 #  ingress:
 #    hosts:
 #      - host: 'xivgear.app'
@@ -402,11 +410,11 @@ xivgear-data-api:
   resources:
     requests:
       cpu: 200m
-      memory: 1024Mi
+      memory: 960Mi
     limits:
       cpu: 1500m
       # Can almost certainly be reduced if needed
-      memory: 1536Mi
+      memory: 1024Mi
 
   autoscaling:
     enabled: true
@@ -422,14 +430,15 @@ xivgear-data-api-beta:
 
   image:
     pullPolicy: Always
-    tag: "master"
+    tag: "main"
 
   resources:
     requests:
       cpu: 80m
       memory: 512Mi
     limits:
-      cpu: 1000m
+      cpu: 500m
+      # 512Mi ran out of memory
       memory: 640Mi
 
   replicaCount: 1
@@ -466,11 +475,11 @@ xivgear-account-service:
 
   resources:
     requests:
-      cpu: 100m
-      memory: 384Mi
+      cpu: 80m
+      memory: 320Mi
     limits:
       cpu: 1000m
-      memory: 384Mi
+      memory: 320Mi
 
   createTables: "false"
 
@@ -491,9 +500,41 @@ xivgear-userdata-service:
   resources:
     requests:
       cpu: 100m
-      memory: 384Mi
+      memory: 256Mi
     limits:
       cpu: 1000m
-      memory: 384Mi
+      memory: 320Mi
 
   createTables: "false"
+
+xivgear-static-bis:
+
+  deploymentAnnotations: *deployAnn
+  # TODO this isn't working
+  priorityClassName: prod-critical
+
+  ingress:
+    enabled: true
+    className: "nginx"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/rewrite-target: /$1
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/enable-cors: "true"
+      nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+      cert-manager.io/cluster-issuer: "letsencrypt-production"
+    hosts:
+      - host: 'staticbis.xivgear.app'
+        paths:
+          - path: /(.*)
+            pathType: ImplementationSpecific
+      - host: 'staticbis2.xivgear.app'
+        paths:
+          - path: /(.*)
+            pathType: ImplementationSpecific
+    tls:
+      - secretName: letsencrypt-staticbis-prod
+        hosts:
+          - "staticbis.xivgear.app"
+          - "staticbis2.xivgear.app"

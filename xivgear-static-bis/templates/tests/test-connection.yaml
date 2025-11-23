@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "xivgear-static-bis.fullname" . }}-test-connection"
+  labels:
+    {{- include "xivgear-static-bis.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "xivgear-static-bis.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "xivgear-static-bis.fullname" . }}
+  labels:
+    {{- include "xivgear-static-bis.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "xivgear-static-bis.selectorLabels" . | nindent 4 }}

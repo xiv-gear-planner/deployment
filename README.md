@@ -11,8 +11,8 @@ just a k/v store, where the keys are the set/sheet UUIDs and the values are the 
 The production deployment uses Keel to keep image versions up to date. Thus, builds do not need to
 'deploy' anything, they just need to push the new image to GHCR and it will be deployed automatically.
 
-The tagging strategy is branch-based. The backend uses 'master' as its production branch, thus,
-any change to master will be deployed automatically. The frontend uses 'prod' as its production
+The tagging strategy is branch-based. The backend uses 'main' as its production branch, thus,
+any change to main will be deployed automatically. The frontend uses 'prod' as its production
 branch.
 
 To deploy any additional microservices, set up a CI/CD build to publish them as a container image,

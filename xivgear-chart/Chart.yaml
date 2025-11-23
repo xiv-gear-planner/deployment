@@ -82,3 +82,6 @@ dependencies:
   - name: xivgear-userdata-service
     version: "0.1.0"
     repository: file://../xivgear-userdata-service
+  - name: xivgear-static-bis
+    version: "0.1.0"
+    repository: file://../xivgear-static-bis

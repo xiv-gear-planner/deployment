@@ -44,5 +44,8 @@ dependencies:
 - name: xivgear-userdata-service
   repository: file://../xivgear-userdata-service
   version: 0.1.0
-digest: sha256:a42911e31fb50f659e40c7c93ab41a1d59694bfebd22087367a80b93caa41aed
-generated: "2025-06-18T18:43:24.9012905-07:00"
+- name: xivgear-static-bis
+  repository: file://../xivgear-static-bis
+  version: 0.1.0
+digest: sha256:55a666727dc24f3ef581094613f51993de7cd93bd86b4bd75ccda9fcd37d5f80
+generated: "2025-08-12T17:59:34.238401-07:00"
