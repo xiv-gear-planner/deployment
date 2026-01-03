@@ -1,0 +1,25 @@
+remoteWrite:
+  - url: https://victoria.xivgear.app/
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+env:
+  - name: VL_remoteWrite_basicAuth_username
+    valueFrom:
+      secretKeyRef:
+        name: vl-secret
+        key: VL_USERNAME
+  - name: VL_remoteWrite_basicAuth_password
+    valueFrom:
+      secretKeyRef:
+        name: vl-secret
+        key: VL_PASSWORD
+
+image:
+  repository: 'docker.io/victoriametrics/vlagent'

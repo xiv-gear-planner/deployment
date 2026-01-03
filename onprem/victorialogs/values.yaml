@@ -1,0 +1,14 @@
+server:
+  retentionDiskSpaceUsage: 50GB
+
+  persistentVolume:
+    size: 100Gi
+
+  extraArgs:
+    # These are passed in via the vl-secret below
+    httpAuth.username: '$(VL_USERNAME)'
+    httpAuth.password: '$(VL_PASSWORD)'
+
+  envFrom:
+    - secretRef:
+        name: vl-secret
