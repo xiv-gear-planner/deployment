@@ -1,0 +1,1 @@
+This was a failed attempt at using kubewatch to get deployment notifications.
