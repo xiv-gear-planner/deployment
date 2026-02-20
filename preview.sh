@@ -3,9 +3,9 @@
 set -e
 
 
-for dir in $(find . -type f -name "Chart.yaml" -exec dirname {} \;); do
+for dir in $(find . -maxdepth 1 -type d -name "xivgear-*" -exec test -f "{}/Chart.yaml" \; -print); do
   pushd "$dir"
-  helm dependency update
+  helm dependency update --skip-refresh
   popd
 done
 
