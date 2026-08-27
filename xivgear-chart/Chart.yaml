@@ -85,3 +85,6 @@ dependencies:
   - name: xivgear-static-bis
     version: "0.1.0"
     repository: file://../xivgear-static-bis
+  - name: xivgear-item-browser
+    version: "0.1.0"
+    repository: file://../xivgear-item-browser

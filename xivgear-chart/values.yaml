@@ -280,7 +280,7 @@ xivgear-stats-api-beta:
     hosts:
       - host: 'betaapi.xivgear.app'
         paths:
-          - path: /(fulldata|basedata|validateEmbed)(.*)
+          - path: /(fulldata|basedata|validateEmbed|putsheet|putset|swagger-ui)(.*)
             pathType: ImplementationSpecific
     tls:
       - secretName: letsencrypt-production-beta-api
@@ -432,12 +432,17 @@ xivgear-data-api-beta:
     pullPolicy: Always
     tag: "main"
 
+  # Beta version is more resource-constrained - give it more time to answer probes
+  probes:
+    readinessTimeout: 8
+    livenessTimeout: 8
+
   resources:
     requests:
       cpu: 80m
       memory: 512Mi
     limits:
-      cpu: 500m
+      cpu: 600m
       # 512Mi ran out of memory
       memory: 640Mi
 
@@ -538,3 +543,24 @@ xivgear-static-bis:
         hosts:
           - "staticbis.xivgear.app"
           - "staticbis2.xivgear.app"
+
+xivgear-item-browser:
+  deploymentAnnotations: *deployAnn
+  priorityClassName: prod-critical
+  image:
+    pullPolicy: Always
+    tag: "main"
+
+  resources:
+    requests:
+      cpu: 200m
+      memory: 280Mi
+    limits:
+      cpu: 1500m
+      memory: 280Mi
+
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 4
+    targetCPUUtilizationPercentage: 500

@@ -112,3 +112,7 @@ propsSecretName: oracle-objectstorage-secret
 objectStorageBucket: 'xivgear-data'
 
 priorityClassName: prod-critical
+
+probes:
+  readinessTimeout: 1
+  livenessTimeout: 1

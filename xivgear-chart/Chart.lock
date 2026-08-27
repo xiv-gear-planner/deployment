@@ -47,5 +47,8 @@ dependencies:
 - name: xivgear-static-bis
   repository: file://../xivgear-static-bis
   version: 0.1.0
-digest: sha256:55a666727dc24f3ef581094613f51993de7cd93bd86b4bd75ccda9fcd37d5f80
-generated: "2025-08-12T17:59:34.238401-07:00"
+- name: xivgear-item-browser
+  repository: file://../xivgear-item-browser
+  version: 0.1.0
+digest: sha256:de20a6cbe52f471c4746ec9a83c8929f9f1d3332e677ad05137502a8d7a6c2e4
+generated: "2026-08-01T19:43:46.9432783-07:00"
