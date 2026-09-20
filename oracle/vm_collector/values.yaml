@@ -1,0 +1,94 @@
+#remoteWrite:
+#  - url: https://victoria.xivgear.app/
+#
+#env:
+#  - name: VL_remoteWrite_basicAuth_username
+#    valueFrom:
+#      secretKeyRef:
+#        name: vl-secret
+#        key: VL_USERNAME
+#  - name: VL_remoteWrite_basicAuth_password
+#    valueFrom:
+#      secretKeyRef:
+#        name: vl-secret
+#        key: VL_PASSWORD
+#
+#image:
+#  repository: 'docker.io/victoriametrics/vlagent'
+vmagent:
+  enabled: true
+  spec:
+    image:
+      repository: docker.io/victoriametrics/vmagent
+    remoteWrite:
+      - url: https://metrics.xivgear.app/api/v1/write
+        basicAuth:
+          username:
+            name: vl-secret
+            key: VL_USERNAME
+          password:
+            name: vl-secret
+            key: VL_PASSWORD
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 100m
+        memory: 200Mi
+
+vmsingle:
+  enabled: false
+
+vmcluster:
+  enabled: false
+
+alertmanager:
+  enabled: false
+
+vmalert:
+  enabled: false
+
+grafana:
+  enabled: false
+
+prometheus-node-exporter:
+  enabled: true
+
+kube-state-metrics:
+  enabled: true
+
+kubelet:
+  enabled: true
+
+kubeApiServer:
+  enabled: true
+
+kubeControllerManager:
+  enabled: false
+
+kubeDns:
+  enabled: false
+
+coreDns:
+  enabled: true
+
+kubeEtcd:
+  enabled: false
+
+kubeScheduler:
+  enabled: false
+
+kubeProxy:
+  enabled: true
+
+victoria-metrics-operator:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: victoriametrics/operator
+  env:
+    - name: VM_CONTAINERREGISTRY
+      value: docker.io
+
+

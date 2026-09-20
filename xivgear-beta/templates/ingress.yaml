@@ -48,13 +48,23 @@ spec:
           {{- range .paths }}
           # Different behavior based on whether preview is enabled or not
           {{- if $.Values.preview.enabled }}
-          - path: {{ trimSuffix "/" (.path) }}/(.+)
+          # Asset requests with an extension other than .html stay on the static server.
+          # The more-specific preview rule below is evaluated first by ingress-nginx for .html paths.
+          - path: {{ trimSuffix "/" (.path) }}/(.+\.[^/]+)/?$
             pathType: {{ .pathType }}
             backend:
               service:
                 name: {{ $fullName }}
                 port:
                   number: {{ $svcPort }}
+          # Extensionless routes and .html routes are handled by the preview server.
+          - path: {{ trimSuffix "/" (.path) }}/(.*/)?[^/.]+(\.html)?/?$
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ $previewFullName }}
+                port:
+                  number: {{ $previewSvcPort }}
           - path: {{ .path }}
             pathType: {{ .pathType }}
             backend:

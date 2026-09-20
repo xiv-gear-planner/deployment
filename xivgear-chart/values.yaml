@@ -410,11 +410,11 @@ xivgear-data-api:
   resources:
     requests:
       cpu: 200m
-      memory: 960Mi
+      memory: 800Mi
     limits:
       cpu: 1500m
       # Can almost certainly be reduced if needed
-      memory: 1024Mi
+      memory: 800Mi
 
   autoscaling:
     enabled: true
@@ -440,11 +440,11 @@ xivgear-data-api-beta:
   resources:
     requests:
       cpu: 80m
-      memory: 512Mi
+      memory: 480Mi
     limits:
       cpu: 600m
       # 512Mi ran out of memory
-      memory: 640Mi
+      memory: 512Mi
 
   replicaCount: 1
   autoscaling:
