@@ -43,10 +43,16 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.shortlinkOverride }}
+          {{- if (or .Values.shortlinkOverride .Values.dataApiOverride)  }}
           env:
+          {{- with .Values.shortlinkOverride }}
           - name: 'SHORTLINK_SERVER'
-            value: {{ .Values.shortlinkOverride }}
+            value: {{ . }}
+          {{- end }}
+          {{- with .Values.dataApiOverride }}
+          - name: 'DATA_API'
+            value: {{ . }}
+          {{- end }}
           {{- end }}
           ports:
             - name: http

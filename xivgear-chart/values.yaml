@@ -56,16 +56,16 @@ xivgear-static:
       enabled: true
       minReplicas: 2
       maxReplicas: 4
-      targetCPUUtilizationPercentage: 60
+      targetCPUUtilizationPercentage: 400
     replicaCount: 2
 
     resources:
       requests:
         cpu: 200m
-        memory: 256Mi
+        memory: 200Mi
       limits:
         cpu: 1200m
-        memory: 320Mi
+        memory: 256Mi
 
 
 
@@ -232,6 +232,7 @@ xivgear-btest:
 xivgear-stats-api:
   deploymentAnnotations: *deployAnn
   shortlinkOverride: 'http://xivgear-xivgear-storage-api:8080/shortlink/'
+  dataApiOverride: 'http://xivgear-xivgear-data-api:8080'
 
   image:
     pullPolicy: Always
@@ -241,21 +242,23 @@ xivgear-stats-api:
   resources:
     requests:
       cpu: 100m
-      memory: 256Mi
+      memory: 300Mi
     limits:
       cpu: 1000m
-      memory: 320Mi
+      memory: 360Mi
 
   autoscaling:
     enabled: true
     minReplicas: 2
     maxReplicas: 8
-    targetCPUUtilizationPercentage: 70
+    # target 700mCPU scale-up
+    targetCPUUtilizationPercentage: 700
 
 xivgear-stats-api-beta:
   deploymentAnnotations: *deployAnn
   priorityClassName: non-prod-non-critical
   shortlinkOverride: 'http://xivgear-xivgear-storage-api:8080/shortlink/'
+  dataApiOverride: 'http://xivgear-xivgear-data-api:8080'
 
   image:
     pullPolicy: Always
@@ -265,10 +268,10 @@ xivgear-stats-api-beta:
   resources:
     requests:
       cpu: 50m
-      memory: 192Mi
+      memory: 160Mi
     limits:
       cpu: 300m
-      memory: 256Mi
+      memory: 200Mi
 
   replicaCount: 1
   autoscaling:
@@ -356,13 +359,6 @@ xivgear-mathcorner:
   image:
     pullPolicy: Always
     tag: "prod"
-  ingress:
-    tls:
-      - secretName: letsencrypt-production-static-new
-        hosts:
-          - "ok.xivgear.app"
-          - "xivgear.app"
-          - "www.xivgear.app"
 
   resources:
     requests:

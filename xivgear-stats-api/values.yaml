@@ -79,7 +79,7 @@ resources: {}
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 100
+  maxReplicas: 4
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
@@ -105,5 +105,7 @@ affinity: {}
 revisionHistoryLimit: 3
 
 shortlinkOverride: ''
+
+dataApiOverride: ''
 
 priorityClassName: prod-non-critical

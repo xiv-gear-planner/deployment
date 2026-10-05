@@ -57,25 +57,15 @@ ingress:
      nginx.ingress.kubernetes.io/rewrite-target: /$1
 
   hosts:
-    - host: 'xivgear.app'
+    - host: 'math.xivgear.app'
       paths:
-        - path: &path /math/(.*)
-          pathType: ImplementationSpecific
-    - host: 'ok.xivgear.app'
-      paths:
-        - path: *path
-          pathType: ImplementationSpecific
-    - host: 'www.xivgear.app'
-      paths:
-        - path: *path
+        - path: /(.*)
           pathType: ImplementationSpecific
 
   tls:
-    - secretName: letsencrypt-production
+    - secretName: letsencrypt-production-math
       hosts:
-        - "xivgear.app"
-        - "ok.xivgear.app"
-        - "www.xivgear.app"
+        - "math.xivgear.app"
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
