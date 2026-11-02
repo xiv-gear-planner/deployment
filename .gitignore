@@ -1,1 +1,3 @@
 /backups/
+# Ignore packed versions of charts
+**/*.tgz

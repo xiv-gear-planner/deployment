@@ -1,0 +1,91 @@
+# Grafana configuration for the on-prem observability services.
+#
+# vm-secret and vl-secret are owned by the VictoriaMetrics and VictoriaLogs
+# releases. The extra objects below copy their data into this namespace, since k8s
+# does not allow cross-namespace secrets access.
+
+plugins:
+  - victoriametrics-metrics-datasource
+  - victoriametrics-logs-datasource
+
+service:
+  type: LoadBalancer
+
+# This persistence is not for ingested data, just for users, dashboards, etc.
+persistence:
+  enabled: true
+  type: pvc
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+
+# Secrets are namespace-scoped, so copy the existing source secrets into the
+# Grafana namespace during a Helm install/upgrade.
+extraObjects:
+  - |
+    {{- $vmSecret := lookup "v1" "Secret" "xivgear-victoria-metrics" "vm-secret" -}}
+    {{- if $vmSecret }}
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: vm-secret
+    type: Opaque
+    data:
+      VM_USERNAME: {{ index $vmSecret.data "VM_USERNAME" | quote }}
+      VM_PASSWORD: {{ index $vmSecret.data "VM_PASSWORD" | quote }}
+    {{- end }}
+  - |
+    {{- $vlSecret := lookup "v1" "Secret" "xivgear-victoria" "vl-secret" -}}
+    {{- if $vlSecret }}
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: vl-secret
+    type: Opaque
+    data:
+      VL_USERNAME: {{ index $vlSecret.data "VL_USERNAME" | quote }}
+      VL_PASSWORD: {{ index $vlSecret.data "VL_PASSWORD" | quote }}
+    {{- end }}
+
+envValueFrom:
+  VM_USERNAME:
+    secretKeyRef:
+      name: vm-secret
+      key: VM_USERNAME
+  VM_PASSWORD:
+    secretKeyRef:
+      name: vm-secret
+      key: VM_PASSWORD
+  VL_USERNAME:
+    secretKeyRef:
+      name: vl-secret
+      key: VL_USERNAME
+  VL_PASSWORD:
+    secretKeyRef:
+      name: vl-secret
+      key: VL_PASSWORD
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: VictoriaMetrics
+        type: victoriametrics-metrics-datasource
+        access: proxy
+        url: http://vls-victoria-metrics-single-server.xivgear-victoria-metrics.svc.cluster.local:8428
+        isDefault: true
+        editable: false
+        basicAuth: true
+        basicAuthUser: $VM_USERNAME
+        secureJsonData:
+          basicAuthPassword: $VM_PASSWORD
+
+      - name: VictoriaLogs
+        type: victoriametrics-logs-datasource
+        access: proxy
+        url: http://vls-victoria-logs-single-server.xivgear-victoria.svc.cluster.local:9428
+        editable: false
+        basicAuth: true
+        basicAuthUser: $VL_USERNAME
+        secureJsonData:
+          basicAuthPassword: $VL_PASSWORD
